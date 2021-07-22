@@ -8,7 +8,9 @@ This Proteogenomic-Pipeline repository conists of python packages for generating
 # How to use six_frame_translation.py
 ```
 >python six_frame_translation.py test_genome.fasta
+
 usage: six_frame_translation.py [-h] -i [-i ...]
+
 Generates a sixframe translated protein sequence database (FASTA) for a given
 genome sequence database
 
