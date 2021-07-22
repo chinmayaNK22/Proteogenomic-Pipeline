@@ -40,7 +40,7 @@ output = []
 def generate_gtf(pep_file, fasta, sixframe_fasta):
     a = pd_peptidegroup_parser.get_header_idx(os.path.join(pep_file))
     c = 0
-    dicts = ''.join(rows[1] for rows in read_fasta_file.read_fasta(os.path.join(fasta))
+    dicts = ''.join(rows[1] for rows in read_fasta_file.read_fasta(os.path.join(fasta)))
     with open(os.path.join(pep_file)) as file:
         for i in islice(file, 1, None):
             split_i = i.rstrip().split('\t')
