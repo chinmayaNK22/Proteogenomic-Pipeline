@@ -21,6 +21,7 @@ optional arguments:
 ```
 
 # How to use generate_gtf.py
+```
 >python generate_gtf.py PeptideGroups.txt Proteome.fasta sixframe_proteome.fasta
 
 usage: generate_gtf.py [-h] -i [-i ...] -f [-f ...] -sf [-sf ...]
