@@ -30,7 +30,7 @@ def fetch_pos(peptide, fasta):
                 end_pos = int(len(peptide)*3) + int(start_pos) - 1
                 strand = '+'
             if 'r' in rows[0].split(' ')[0].split('#')[1]:
-                end_pos = int(rows[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (rows[1].index(peptide) * 3) - 1
+                end_pos = int(rows[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (rows[1].index(peptide) * 3) + 2
                 start_pos = int(end_pos) - int(len(peptide)*3) + 1
                 strand = '-'
                 
