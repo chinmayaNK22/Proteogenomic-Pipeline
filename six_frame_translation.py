@@ -1,5 +1,6 @@
 import read_fasta_file
 import argparse
+import os
 
 parser = argparse.ArgumentParser(description='''Generates a sixframe translated protein sequence database (FASTA) for a given genome sequence database''')
 
