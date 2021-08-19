@@ -18,23 +18,30 @@ args = parser.parse_args()
 ##fasta = 'Mavium_hominissuis_GCF_000007865.1_ASM786v1_protein.fasta'
 
 def fetch_pos(peptide, fasta):
-    start_pos = ""
-    end_pos = ""
-    strand = ""
-    chromosome = ""
+    chromosome = {}
     for rows in read_fasta_file.read_fasta(os.path.join(fasta)):
-        chromosome = rows[0].split(' ')[1]
-        if peptide in rows[1]:
-            if 'f' in rows[0].split(' ')[0].split('#')[1]:
-                start_pos = int(rows[0].split(' ')[0].split('#')[-1].split(':')[0]) + (rows[1].index(peptide) * 3)
-                end_pos = int(len(peptide)*3) + int(start_pos) - 1
-                strand = '+'
-            if 'r' in rows[0].split(' ')[0].split('#')[1]:
-                end_pos = int(rows[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (rows[1].index(peptide) * 3) + 2
-                start_pos = int(end_pos) - int(len(peptide)*3) + 1
-                strand = '-'
-                
-    return peptide, str(start_pos), str(end_pos), strand, chromosome
+        if rows[0].split(' ')[1] not in chromosome:
+            chromosome[rows[0].split(' ')[1]] = [rows[0] + '@' + rows[1]]
+        else:
+            chromosome[rows[0].split(' ')[1]].append(rows[0] + '@' + rows[1])
+            
+    for k, v in chromosome.items():
+        start_pos = ""
+        end_pos = ""
+        strand = ""
+        for j in v:
+            if peptide in j.split('@')[-1]:
+                if 'f' in j.split('@')[0].split(' ')[0].split('#')[1]:
+                    start_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[0]) + (j.split('@')[1].index(peptide) * 3)
+                    end_pos = int(len(peptide)*3) + int(start_pos) - 1
+                    strand = '+'
+                if 'r' in j.split('@')[0].split(' ')[0].split('#')[1]:
+                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (j.split('@')[1].index(peptide) * 3) + 2
+                    start_pos = int(end_pos) - int(len(peptide)*3) + 1
+                    strand = '-'
+
+        #print (peptide, str(start_pos), str(end_pos), strand, k)
+        return peptide, str(start_pos), str(end_pos), strand, k
 
 output = []
 def generate_gtf(pep_file, fasta, sixframe_fasta):
