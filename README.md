@@ -1,6 +1,6 @@
 # Proteogenomic-Pipeline
 
-In order to execute the proteogenomic pipeline, it is crucial to generates a sixframe translated protein sequence for a give genome sequence file along with their genome coordinates.
+In order to execute the proteogenomic pipeline, it is crucial to generates a sixframe translated protein sequence for a given genome sequence file along with their genome coordinates.
 
 This Proteogenomic-Pipeline repository conists of python packages for generating sixframe translated protein sequences and a gtf file generating package for Genome Search-Specific Peptides (GSSPs).
 
