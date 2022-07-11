@@ -36,7 +36,7 @@ def gen_sixframe(infile):
         raise Exception('File extension is invalid!!. Please use input genome sequences with file name extensions "fasta", "fna", "faa", "FASTA", "FNA", "FAA" are valid.')
     elif infile.split('.')[-1] in file_formats:
         ATGC = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
-        outfile = '{0}_sixframe.fasta'.format(args.infile[0].rstrip(file_format[infile.split('.')[-1]]).rstrip('.'))
+        outfile = '{0}_sixframe.fasta'.format(args.infile[0].rstrip(infile.split('.')[-1]).rstrip('.'))
         write1 = open(outfile, 'w')
         uniq_id = 1
         for rows in read_fasta_file.read_fasta(os.path.join(infile)):
@@ -45,7 +45,7 @@ def gen_sixframe(infile):
             b = len(rows[1].rstrip())
             for k in range(3):
                 seq = rows[1].rstrip()[a:b]
-                translated_seq = translate(seq)
+                translated_seq = translate(seq.upper())
                 seq_final = translated_seq.replace('*', 'X')
                 seq_id = 1
                 for j in seq_final.split('X'):
@@ -60,7 +60,7 @@ def gen_sixframe(infile):
                 a = a + 1
 
         #### Reverse translation ####
-            strand2 = ''.join(idx if idx not in ATGC else ATGC[idx] for idx in rows[1])
+            strand2 = ''.join(idx if idx not in ATGC else ATGC[idx] for idx in rows[1].upper())
             reverse = strand2[::-1]
             c = 0
             d = len(reverse.rstrip())
