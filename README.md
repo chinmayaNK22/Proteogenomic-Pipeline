@@ -41,4 +41,4 @@ optional arguments:
 ```
 
 # Citation
-Please cite this tool using the DOI: 10.5281/zenodo.7249027 
+Please cite this tool using the DOI [![DOI](https://zenodo.org/badge/388470655.svg)](https://zenodo.org/badge/latestdoi/388470655) 
