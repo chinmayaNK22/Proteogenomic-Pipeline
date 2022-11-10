@@ -32,8 +32,8 @@ GCA	A	Ala
 GCG	A	Ala
 TAT	Y	Tyr
 TAC	Y	Tyr
-TAA	*	Ter
-TAG	*	Ter
+TAA	X	Ter
+TAG	X	Ter
 CAT	H	His
 CAC	H	His
 CAA	Q	Gln
@@ -48,7 +48,7 @@ GAA	E	Glu
 GAG	E	Glu
 TGT	C	Cys
 TGC	C	Cys
-TGA	*	Ter
+TGA	X	Ter
 TGG	W	Trp
 CGT	R	Arg
 CGC	R	Arg
@@ -62,4 +62,4 @@ GGT	G	Gly
 GGC	G	Gly
 GGA	G	Gly
 GGG	G	Gly
-NNN	*	Ter
+NNN	X	Ter
