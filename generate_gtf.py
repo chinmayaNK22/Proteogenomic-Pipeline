@@ -20,10 +20,16 @@ args = parser.parse_args()
 def fetch_pos(peptide, fasta):
     chromosome = {}
     for rows in read_fasta_file.read_fasta(os.path.join(fasta)):
-        if rows[0].split(' ')[1] not in chromosome:
-            chromosome[rows[0].split(' ')[1]] = [rows[0] + '@' + rows[1]]
-        else:
-            chromosome[rows[0].split(' ')[1]].append(rows[0] + '@' + rows[1])
+        try:
+            if rows[0].split(' ')[1] not in chromosome:
+                chromosome[rows[0].split(' ')[1]] = [rows[0] + '@' + rows[1]]
+            else:
+                chromosome[rows[0].split(' ')[1]].append(rows[0] + '@' + rows[1])
+        except:
+            if rows[0] not in chromosome:
+                chromosome[rows[0]] = [rows[0] + '@' + rows[1]]
+            else:
+                chromosome[rows[0]].append(rows[0] + '@' + rows[1])
             
     for k, v in chromosome.items():
         start_pos = ""
@@ -35,8 +41,16 @@ def fetch_pos(peptide, fasta):
                     start_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[0]) + (j.split('@')[1].index(peptide) * 3)
                     end_pos = int(len(peptide)*3) + int(start_pos) - 1
                     strand = '+'
+                elif 'f' in j.split('@')[0].split(' ')[0].split('#')[1].split('_')[-1][0]:
+                    start_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split('-')[0].split('_')[1]) + (j.split('@')[1].index(peptide) * 3)
+                    end_pos = int(len(peptide)*3) + int(start_pos) - 1
+                    strand = '+'
                 if 'r' in j.split('@')[0].split(' ')[0].split('#')[1]:
                     end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (j.split('@')[1].index(peptide) * 3) + 2
+                    start_pos = int(end_pos) - int(len(peptide)*3) + 1
+                    strand = '-'
+                elif 'r' in j.split('@')[0].split(' ')[0].split('#')[1].split('_')[-1][0]:
+                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split('-')[-1].split('_')[0]) - (j.split('@')[1].index(peptide) * 3) + 2
                     start_pos = int(end_pos) - int(len(peptide)*3) + 1
                     strand = '-'
 
@@ -45,13 +59,13 @@ def fetch_pos(peptide, fasta):
 
 output = []
 def generate_gtf(pep_file, fasta, sixframe_fasta):
-    a = pd_peptidegroup_parser.get_header_idx(os.path.join(pep_file))
+    a = pd_peptidegroup_parser.get_seq_idx(os.path.join(pep_file))
     c = 0
     dicts = ''.join(rows[1] for rows in read_fasta_file.read_fasta(os.path.join(fasta)))
     with open(os.path.join(pep_file)) as file:
         for i in islice(file, 1, None):
             split_i = i.rstrip().split('\t')
-            peptide = split_i[a[0]].strip('"').split('.')[1]
+            peptide = split_i[a].strip('"').split('.')[1]
             if peptide not in dicts:
                 pep, start_pos, end_pos, strand, chromosome = fetch_pos(peptide, sixframe_fasta)
                 if len(start_pos) > 0 and len(end_pos) > 0:
