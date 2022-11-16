@@ -39,3 +39,6 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
 ```
+
+# Citation
+Please cite this tool using the DOI [![DOI](https://zenodo.org/badge/388470655.svg)](https://zenodo.org/badge/latestdoi/388470655) 
