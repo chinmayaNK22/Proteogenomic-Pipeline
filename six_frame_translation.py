@@ -31,7 +31,7 @@ def translate(instring):
 
 def gen_sixframe(infile):
     #fasta = read_fasta_file.read_fasta('Mavium_hominissuis_GCF_000007865.1_ASM786v1_genomic.fna')
-    file_formats = {'fasta':1, 'fna':2, 'faa':3, 'FASTA':4, 'FNA':5, 'FAA':6}
+    file_formats = {'fasta':1, 'fna':2, 'faa':3, 'FASTA':4, 'FNA':5, 'FAA':6, 'fa':7, 'FA':8}
     if infile.split('.')[-1] not in file_formats:
         raise Exception('File extension is invalid!!. Please use input genome sequences with file name extensions "fasta", "fna", "faa", "FASTA", "FNA", "FAA" are valid.')
     elif infile.split('.')[-1] in file_formats:
