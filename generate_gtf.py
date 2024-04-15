@@ -12,7 +12,6 @@ parser.add_argument('sixframe_fasta', metavar='-sf', type=str, nargs='+', help='
 
 args = parser.parse_args()
 
-
 ##infile = 'M_avium_Mtb_H37RvRa_search_unassigned_6frame_search_071721_PeptideGroups.txt'
 ##sixframe_fasta = 'sixframe/Mavium_hominissuis_GCF_000007865.1_ASM786v1_genomic_sixframe.fasta'
 ##fasta = 'Mavium_hominissuis_GCF_000007865.1_ASM786v1_protein.fasta'
