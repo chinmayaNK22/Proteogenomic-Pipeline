@@ -45,11 +45,11 @@ def fetch_pos(peptide, fasta):
                     end_pos = int(len(peptide)*3) + int(start_pos) - 1
                     strand = '+'
                 if 'r' in j.split('@')[0].split(' ')[0].split('#')[1]:
-                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (j.split('@')[1].index(peptide) * 3) + 3
+                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split(':')[-1]) - (j.split('@')[1].index(peptide) * 3)
                     start_pos = int(end_pos) - int(len(peptide)*3) + 1
                     strand = '-'
                 elif 'r' in j.split('@')[0].split(' ')[0].split('#')[1].split('_')[-1][0]:
-                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split('-')[-1].split('_')[0]) - (j.split('@')[1].index(peptide) * 3) + 3
+                    end_pos = int(j.split('@')[0].split(' ')[0].split('#')[-1].split('-')[-1].split('_')[0]) - (j.split('@')[1].index(peptide) * 3)
                     start_pos = int(end_pos) - int(len(peptide)*3) + 1
                     strand = '-'
 
@@ -70,7 +70,7 @@ def generate_gtf(pep_file, fasta, sixframe_fasta):
                 if len(start_pos) > 0 and len(end_pos) > 0:
                     c += 1
                     #print ('NC_002944.2','Custom_script','CDS',  start_pos, end_pos, '.', strand, '0', 'gene ' + '"Mavium_' + str(c) + '";transcript "' + pep + '"')
-                    output.append([chromosome,'Custom_script','CDS',  start_pos, end_pos, '.', strand, '0', 'gene ' + '"Mavium_' + str(c) + '";transcript "' + pep + '"'])
+                    output.append([chromosome,'Custom_script','CDS',  start_pos, end_pos, '.', strand, '0', 'gene ' + '"GSSP_' + str(c) + '";transcript "' + pep + '"'])
                 
 
 generate_gtf(args.infile[0], args.proteome_fasta[0], args.sixframe_fasta[0]) 
