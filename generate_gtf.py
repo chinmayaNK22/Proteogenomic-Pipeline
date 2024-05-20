@@ -16,7 +16,7 @@ args = parser.parse_args()
 ##sixframe_fasta = 'sixframe/Mavium_hominissuis_GCF_000007865.1_ASM786v1_genomic_sixframe.fasta'
 ##fasta = 'Mavium_hominissuis_GCF_000007865.1_ASM786v1_protein.fasta'
 
-def fetch_pos(peptide, fasta):
+def parse_6frame(fasta):
     chromosome = {}
     for rows in read_fasta_file.read_fasta(os.path.join(fasta)):
         try:
@@ -29,7 +29,12 @@ def fetch_pos(peptide, fasta):
                 chromosome[rows[0]] = [rows[0] + '@' + rows[1]]
             else:
                 chromosome[rows[0]].append(rows[0] + '@' + rows[1])
-            
+
+    return chromosome
+
+def fetch_pos(fasta, peptide):
+    chromosome = parse_6frame(fasta)
+    print (f"INFO: Stored {len(chromosome)} sequences from {fasta}")
     for k, v in chromosome.items():
         start_pos = ""
         end_pos = ""
@@ -66,12 +71,11 @@ def generate_gtf(pep_file, fasta, sixframe_fasta):
             split_i = i.rstrip().split('\t')
             peptide = split_i[a].strip('"').split('.')[1]
             if peptide not in dicts:
-                pep, start_pos, end_pos, strand, chromosome = fetch_pos(peptide, sixframe_fasta)
+                pep, start_pos, end_pos, strand, chromosome = fetch_pos(sixframe_fasta, peptide)
                 if len(start_pos) > 0 and len(end_pos) > 0:
                     c += 1
                     #print ('NC_002944.2','Custom_script','CDS',  start_pos, end_pos, '.', strand, '0', 'gene ' + '"Mavium_' + str(c) + '";transcript "' + pep + '"')
                     output.append([chromosome,'Custom_script','CDS',  start_pos, end_pos, '.', strand, '0', 'gene ' + '"GSSP_' + str(c) + '";transcript "' + pep + '"'])
-                
 
 generate_gtf(args.infile[0], args.proteome_fasta[0], args.sixframe_fasta[0]) 
 
