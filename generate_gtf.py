@@ -69,7 +69,11 @@ def generate_gtf(pep_file, fasta, sixframe_fasta):
     with open(os.path.join(pep_file)) as file:
         for i in islice(file, 1, None):
             split_i = i.rstrip().split('\t')
-            peptide = split_i[a].strip('"').split('.')[1]
+            try:
+                peptide = split_i[a].strip('"').split('.')[1]
+            except:
+                peptide = split_i[a].split('.')[1]
+
             if peptide not in dicts:
                 pep, start_pos, end_pos, strand, chromosome = fetch_pos(chromosomes, peptide)
                 if len(start_pos) > 0 and len(end_pos) > 0:
